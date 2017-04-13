@@ -18,10 +18,7 @@ Gem::Specification.new do |s|
   s.metadata = { "logstash_plugin" => "true", "logstash_group" => "filter" }
 
   # Gem dependencies
-  s.requirements << "jar 'uia.nda:packet.syslog', '0.1.0-SNAPSHOT'"
   s.add_runtime_dependency "logstash-core-plugin-api", "~> 2.0"
-  s.add_runtime_dependency 'jar-dependencies'  
-  s.add_development_dependency 'logstash-devutils'
-  
- # Jar dependencies
+  s.add_development_dependency 'logstash-devutils', '~> 0'
+  s.add_runtime_dependency 'jar-dependencies', '~> 0'
 end

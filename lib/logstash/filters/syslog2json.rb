@@ -3,7 +3,18 @@ require "logstash/filters/base"
 require "logstash/namespace"
 
 require "java"
-require "packet.syslog.0.0.1-SNAPSHOT.jar"
+require "java/commons-lang3-3.1.jar"
+require "java/grok-0.1.5.jar"
+require "java/gson-2.7.jar"
+require "java/packet-0.0.1-SNAPSHOT.jar"
+require "java/packet.syslog-0.0.1-SNAPSHOT.jar"
+require "java/simple-xml-2.7.1.jar"
+require "java/slf4j-api-1.7.5.jar"
+require "java/slf4j-simple-1.7.5.jar"
+require "java/stax-1.2.0.jar"
+require "java/stax-api-1.0.1.jar"
+require "java/syslog.we-0.0.1-SNAPSHOT.jar"
+require "java/xpp3-1.1.3.3.jar"
 
 # This  filter will replace the contents of the default 
 # message field with whatever you specify in the configuration.
@@ -20,14 +31,14 @@ class LogStash::Filters::Syslog2json < LogStash::Filters::Base
   public
   def register
     # Add instance variables 
-    @s2j = Java::uia.nda.packet.syslog.SysLog2Json.new
+    @helper = Java::uia.nda.packet.syslog.SysLogHelper.new
   end # def register
 
   public
   def filter(event)
 
     # use java API to convert Syslog text to json format.
-    json = @s2j.read(event.get("message"))
+    json = @helper.parse2EsDoc(event.get("message"))
     event.set("message", json)
 
     # filter_matched should go in the last line of our successful code
